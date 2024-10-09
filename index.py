@@ -7,30 +7,30 @@ from pymongo.server_api import ServerApi
 
 app = Flask(__name__)
 
-# Constants
-THRESHOLD_PRESSURE = 100  # Pressure threshold
 
-# MongoDB URI (make sure the password is secure)
+THRESHOLD_PRESSURE = 100  
+
+
 db_password = "secretpassword"
 uri = f"mongodb+srv://maxmartin54321:{db_password}@cluster0.4ndnf.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
-# Create a new client and connect to the server
-client = MongoClient(uri, server_api=ServerApi('1'))
-db = client.get_database("pressure_data")  # Replace with your actual database name
-collection = db.get_collection("readings")  # Replace with your actual collection name
 
-# Send a ping to confirm a successful connection
+client = MongoClient(uri, server_api=ServerApi('1'))
+db = client.get_database("pressure_data") 
+collection = db.get_collection("readings")  
+
+
 try:
     client.admin.command('ping')
     print("Pinged your deployment. You successfully connected to MongoDB!")
 except Exception as e:
     print(f"Failed to connect to MongoDB: {e}")
 
-# Simulate pressure data
-def simulate_pressure_data():
-    return random.uniform(0, 150)  # Simulate pressure between 0 and 150 units
 
-# Store data in MongoDB
+def simulate_pressure_data():
+    return random.uniform(0, 150)
+
+
 def store_data_online(pressure):
     data = {"pressure": pressure, "timestamp": time.time()}
     try:
